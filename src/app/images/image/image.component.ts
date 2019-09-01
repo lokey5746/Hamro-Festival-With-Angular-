@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-image',
@@ -9,11 +9,12 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class ImageComponent implements OnInit {
   imgSrc:string='/assets/img/image_placeholder.jpg';
   selectedImage:any=null;
+  isSubmitted:boolean=false;
 
   formTemplate = new FormGroup({
-    caption: new FormControl(''),
+    caption: new FormControl('',Validators.required),
     category: new FormControl(''),
-    imageUrl: new FormControl('')
+    imageUrl: new FormControl('',Validators.required)
   })
   constructor() { }
 
@@ -31,6 +32,14 @@ export class ImageComponent implements OnInit {
       this.imgSrc = '/assets/img/image_placeholder.jpg';
       this.selectedImage=null;
     }
+  }
+
+  onSubmit(formValue){
+    this.isSubmitted = true;
+  }
+
+  get formControl(){
+    return this.formTemplate['controls'];
   }
 
 }
